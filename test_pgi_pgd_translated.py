@@ -1,6 +1,6 @@
 import numpy as np
-from PGDVince import PGDVince
-from PGIVince import PGIVince
+from direct_kinematics_jaco import direct_kinematics_jaco
+from inverse_kinematics_jaco import inverse_kinematics_jaco
 from joint_state_velocity_publisher import convert_to_angular_velocities
 
 if __name__ == '__main__':
@@ -18,9 +18,9 @@ if __name__ == '__main__':
                       [0.]])
     #theta -= np.array([[0.], [-np.pi / 2.0], [np.pi / 2.0], [0.], [-np.pi], [5.0 * np.pi / 9.0]])
 
-    old_pose, old_Q = PGDVince(theta)
+    old_pose, old_Q = direct_kinematics_jaco(theta)
     print(old_pose)
-    theta, success, theta_approx = PGIVince(old_pose, old_Q, theta)
+    theta, success, theta_approx = inverse_kinematics_jaco(old_pose, old_Q, theta)
     # theta = (theta + np.pi) % (2 * np.pi) - np.pi
     print(theta, success)
     # old_pose, old_Q = PGDVince(theta)
@@ -50,9 +50,9 @@ if __name__ == '__main__':
     # print("difference entre les deux")
     # print(Q - new_Q)
     #theta += np.array([[0.], [-np.pi / 2.0], [np.pi / 2.0], [0.], [-np.pi], [5.0 * np.pi / 9.0]])
-    pose, Q = PGDVince(theta)
+    pose, Q = direct_kinematics_jaco(theta)
     print(pose)
-    theta, success, theta_approx = PGIVince(pose, Q, theta)
+    theta, success, theta_approx = inverse_kinematics_jaco(pose, Q, theta)
     print(theta, success)
     for i in range(10):
         # theta = (theta + np.pi) % (2 * np.pi) - np.pi
@@ -61,7 +61,7 @@ if __name__ == '__main__':
         # print(angular_velocities)
         theta += np.array(angular_velocities) * 0.001
         # print(theta)
-        pose, Q = PGDVince(theta)
+        pose, Q = direct_kinematics_jaco(theta)
         print(np.subtract(pose, old_pose) / 0.001)
         old_pose = pose
     # # for i in range(100):

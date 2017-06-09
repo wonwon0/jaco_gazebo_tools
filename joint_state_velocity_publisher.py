@@ -7,8 +7,8 @@ import roslib
 import math
 import numpy as np
 import sys
-from PGDVince import PGDVince
-from PGIVince import PGIVince
+from direct_kinematics_jaco import direct_kinematics_jaco
+from inverse_kinematics_jaco import inverse_kinematics_jaco
 roslib.load_manifest('joint_states_listener')
 from joint_states_listener.srv import ReturnJointStates
 import rospy
@@ -140,7 +140,7 @@ def convert_to_angular_velocities(velocities, theta_current, dt):
                                [theta_current[3]],
                                [theta_current[4]],
                                [theta_current[5]]])
-    cartesian_pose, rotation_matrix = PGDVince(theta_current)
+    cartesian_pose, rotation_matrix = direct_kinematics_jaco(theta_current)
     next_cartesian_pose = cartesian_pose + np.multiply(velocities[0:3, 0].reshape(3, 1), dt)
     euler_angles = rotationMatrixToEulerAngles(rotation_matrix)
     next_euler_angles = np.array(euler_angles).reshape(3, 1) + np.multiply(velocities[3:6, 0].reshape(3, 1), dt)
@@ -148,7 +148,7 @@ def convert_to_angular_velocities(velocities, theta_current, dt):
                                                         next_euler_angles[1, 0],
                                                         next_euler_angles[2, 0]])
 
-    next_theta, success, sol_approx = PGIVince(next_cartesian_pose, rotation_matrix, theta_current)
+    next_theta, success, sol_approx = inverse_kinematics_jaco(next_cartesian_pose, rotation_matrix, theta_current)
     # print(np.unwrap(theta_current), "theta_current")
     # print(np.unwrap(next_theta), "next_theta")
     # print(np.subtract(np.unwrap(next_theta), np.unwrap(theta_current)), "theta_diff")
