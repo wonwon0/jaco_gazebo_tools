@@ -1,0 +1,13 @@
+
+theta = [0,0,0,0,0,0]';
+[pose,q] = PGDVince(theta);
+speed = [0.01,0,0]';
+dt = 0.01;
+for i = 1:100
+[theta, sol, solaprox] = PGIVince(pose + speed * dt,q,theta);
+[pose,q] = PGDVince(theta);
+end
+for i = 1:100
+[theta,sol,solaprox] = PGIVince(pose - speed,q,theta);
+[pose,q] = PGDVince(theta);
+end
