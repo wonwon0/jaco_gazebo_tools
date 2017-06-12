@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/phil/catkin_ws/src/scripts/joint_states_listener_real_jaco/build/devel/setup.sh

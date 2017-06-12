@@ -1,0 +1,15 @@
+﻿<package>
+  <description brief="joint_states_listener_real_jaco">
+        
+    joint_states_listener_real_jaco
+ 
+  </description>
+  <author>phil</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/joint_states_listener_real_jaco</url> 
+  <depend package="rospy"/>
+  <depend package="kinova_msgs"/> 
+</package>
+
+

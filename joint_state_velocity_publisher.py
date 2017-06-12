@@ -13,20 +13,21 @@ roslib.load_manifest('joint_states_listener')
 from joint_states_listener.srv import ReturnJointStates
 import rospy
 from sensor_msgs.msg import JointState
-import jaco_jacobian
 
-class JointStateMessage():
+
+class JointStateMessage:
     def __init__(self, name, position, velocity, effort):
         self.name = name
         self.position = position
         self.velocity = velocity
         self.effort = effort
 
-class JointStatePublisher():
-    def __init__(self, joystick=None):
-        self.joystick = joystick
-        rospy.init_node('dynamixel_joint_state_publisher', anonymous=True)
 
+class JointStatePublisher():
+    def __init__(self, joystick=None, control_type='gazebo'):
+        self.joystick = joystick
+        self.control_type = control_type
+        rospy.init_node('phil_joint_state_publisher', anonymous=True)
         self.rate = 100
         rate = rospy.get_param('~rate', self.rate)
         r = rospy.Rate(rate)

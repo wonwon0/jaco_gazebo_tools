@@ -51,6 +51,7 @@ def inverse_kinematics_jaco(t_target, Q_target, ThetaEstimate):
     s2a = np.sin((2.*aa))
     d4b = D3 + (sa / s2a) * D4
     d5b = (sa / s2a) * D4 + (sa / s2a) * D5
+    d6b = (sa / s2a) * D5 + D6
     # DH parameters(Kinova)
     a = np.array(np.hstack((0., D2, 0., 0., 0., 0.)))
     d = np.array(np.hstack((D1, 0., -E2, -d4b, -d5b, -d6b)))
