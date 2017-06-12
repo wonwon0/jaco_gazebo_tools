@@ -2,16 +2,16 @@
 #test client for joint_states_listener
 
 import roslib
-roslib.load_manifest('joint_states_listener')
+roslib.load_manifest('joint_states_listener_real_jaco')
 import rospy
-from joint_states_listener.srv import ReturnJointStates
+from joint_states_listener_real_jaco.srv import ReturnJointStatesRealJaco
 import time
 import sys
 
 def call_return_joint_states(joint_names):
     rospy.wait_for_service("return_joint_states")
     try:
-        s = rospy.ServiceProxy("return_joint_states", ReturnJointStates)
+        s = rospy.ServiceProxy("return_joint_states_real_jaco", ReturnJointStatesRealJaco)
         resp = s(joint_names)
     except rospy.ServiceException, e:
         print "error when calling return_joint_states: %s"%e
@@ -19,7 +19,7 @@ def call_return_joint_states(joint_names):
     for (ind, joint_name) in enumerate(joint_names):
         if(not resp.found[ind]):
             print "joint %s not found!"%joint_name
-    return (resp.position, resp.velocity, resp.effort)
+    return theta
 
 
 #pretty-print list to string
@@ -29,10 +29,8 @@ def pplist(list):
 
 #print out the positions, velocities, and efforts of the right arm joints
 if __name__ == "__main__":
-    joint_names = ["jaco_arm_0_joint","jaco_arm_1_joint","jaco_arm_2_joint","jaco_arm_3_joint","jaco_arm_4_joint","jaco_arm_5_joint"]
+    joint_names = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
     while(1):
-        (position, velocity, effort) = call_return_joint_states(joint_names)
-        print "position:", pplist(position)
-        print "velocity:", pplist(velocity)
-        print "effort:", pplist(effort)
+        theta = call_return_joint_states(joint_names)
+        print "position:", theta
         time.sleep(1)

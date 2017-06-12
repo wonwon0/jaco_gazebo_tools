@@ -14,16 +14,23 @@ import math
 import actionlib
 import kinova_msgs.msg
 import time
+import thread
 
+class jaco_tester:
+    def __init__(self):
+        self.theta = []
 
-def dummy(msg):
-    print(msg)
+    def dummy(self, msg):
+        self.theta = msg
+
 if __name__ == '__main__':
     rospy.init_node('pls_work', anonymous=True)
-
+    jaco = jaco_tester()
+    rate = rospy.get_param('~rate', 100)
+    a = rospy.Subscriber('/j2n6s300_driver/out/joint_angles', kinova_msgs.msg.JointAngles, jaco.dummy)
     for i in range(100):
         b = time.time()
-        a = rospy.Subscriber('/j2n6s300_driver/out/joint_angles', kinova_msgs.msg.JointAngles, dummy)
+        print(jaco.theta)
         time.sleep(0.1)
         print(time.time() - b)
 
