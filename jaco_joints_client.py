@@ -4,8 +4,10 @@ import rospy
 import kinova_msgs.msg
 import time
 import threading
+import numpy as np
 
-class jaco_tester:
+
+class JacoJointsClient:
     def __init__(self):
         self.lock = threading.Lock()
         self.theta = []
@@ -21,16 +23,15 @@ class jaco_tester:
     def gimme_joints(self, msg):
         self.lock.acquire()
         current_time = start_time = time.time()
-        if msg==[]:
+        if msg is []:
             self.cond.wait(self.timeout - current_time + start_time)
-        self.theta = [msg.joint1, msg.joint2, msg.joint3, msg.joint3, msg.joint5, msg.joint6]
+        self.theta = [msg.joint1 * np.pi / 180., msg.joint2 * np.pi / 180., msg.joint3 * np.pi / 180.,
+                      msg.joint3 * np.pi / 180., msg.joint5 * np.pi / 180., msg.joint6 * np.pi / 180.]
         self.lock.release()
 
-
     def get_joints_states(self):
-
-        if self.theta==[]:
-            rospy.logerr("no packets received")
+        if self.theta is []:
+            rospy.logerr("no jaco packets received")
             return self.theta
 
         self.lock.acquire()
@@ -38,15 +39,15 @@ class jaco_tester:
         self.lock.release()
         return joints_angles
 
+
 def talker():
     rospy.init_node('pls_work', anonymous=True)
     rate = rospy.Rate(100) # 100hz
-    jaco = jaco_tester()
+    jaco = JacoJointsClient()
     start = time.time()
     while not rospy.is_shutdown():
         rate.sleep()
-        theta = jaco.get_joints_states()
-        print(theta)
+        print(jaco.get_joints_states())
         dt = time.time() - start
         print(dt)
         start = time.time()
@@ -56,7 +57,6 @@ if __name__ == '__main__':
         talker()
     except rospy.ROSInterruptException:
         pass
-
 
 
 

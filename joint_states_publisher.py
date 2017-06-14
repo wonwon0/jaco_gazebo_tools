@@ -13,6 +13,7 @@ roslib.load_manifest('joint_states_listener')
 from joint_states_listener.srv import ReturnJointStates
 import rospy
 from sensor_msgs.msg import JointState
+from jaco_joints_client import JacoJointsClient
 
 
 class JointStateMessage:
@@ -23,14 +24,21 @@ class JointStateMessage:
         self.effort = effort
 
 
-class JointStatePublisher():
+class JointStatePublisher:
     def __init__(self, joystick=None, control_type='gazebo'):
-        self.joystick = joystick
-        self.control_type = control_type
+
         rospy.init_node('phil_joint_state_publisher', anonymous=True)
         self.rate = 100
         rate = rospy.get_param('~rate', self.rate)
         r = rospy.Rate(rate)
+        self.control_type = control_type
+        self.joystick = joystick
+
+        if self.control_type == 'real_world':
+            self.jaco_joints_client = JacoJointsClient()
+
+
+
 
 
         # The namespace and joints parameter needs to be set by the servo controller
@@ -81,28 +89,57 @@ class JointStatePublisher():
         msg.position = []
         msg.velocity = []
         msg.effort = []
-        if self.joystick is None:
-            velocities = [0, 0, 0, 0, 0, 0]
-        else:
-            velocities = [self.joystick.get_axis(0) / 10.0,
-                          self.joystick.get_axis(1) / 10.0,
-                          self.joystick.get_axis(2) / 10.0, 0, 0, 0]
-        [latest_positions, latest_velocities, latest_effort] = self.latest_states.call_return_joint_states()
-        if self.last_working_pose is None:
-            self.last_working_pose = latest_positions
-        angular_velocities = convert_to_angular_velocities(velocities, latest_positions, 1.0 / self.rate)
-        angular_velocities = angular_velocities.reshape(1, 6)[0]
-        #print(angular_velocities)
-        for idx, controller in enumerate(self.controllers):
-            msg.name.append(controller)
-            if abs(angular_velocities[idx]) <= 0.00000001:
-                msg.position.append(self.last_working_pose[idx])
-                #msg.velocity.append(0)
+        if self.control_type == 'gazebo':
+            if self.joystick is None:
+                velocities = [0, 0, 0, 0, 0, 0]
             else:
+                velocities = [self.joystick.get_axis(0) / 10.0,
+                              self.joystick.get_axis(1) / 10.0,
+                              self.joystick.get_axis(2) / 10.0, 0, 0, 0]
+            [latest_positions, latest_velocities, latest_effort] = self.latest_states.call_return_joint_states()
+            if self.last_working_pose is None:
                 self.last_working_pose = latest_positions
-                msg.position.append(latest_positions[idx] + velocities[idx] * (1.0 / self.rate))
-                msg.velocity.append(angular_velocities[idx])
-        self.joint_states_pub.publish(msg)
+            angular_velocities = convert_to_angular_velocities(velocities, latest_positions, 1.0 / self.rate)
+            angular_velocities = angular_velocities.reshape(1, 6)[0]
+            #print(angular_velocities)
+            for idx, controller in enumerate(self.controllers):
+                msg.name.append(controller)
+                if abs(angular_velocities[idx]) <= 0.00000001:
+                    msg.position.append(self.last_working_pose[idx])
+                    #msg.velocity.append(0)
+                else:
+                    self.last_working_pose = latest_positions
+                    msg.position.append(latest_positions[idx] + velocities[idx] * (1.0 / self.rate))
+                    msg.velocity.append(angular_velocities[idx])
+            self.joint_states_pub.publish(msg)
+
+        elif self.control_type == 'real_world':
+            real_jaco_joints_states = self.jaco_joints_client.get_joints_states()
+            if real_jaco_joints_states == []:
+                pass
+            else:
+                real_jaco_joints_states = np.array(real_jaco_joints_states)
+                real_jaco_joints_states *= np.array([1, -1, 1, -1, -1, -1])
+                real_jaco_joints_states -= np.array([-np.pi,
+                                                     -np.pi / 2.,
+                                                     -np.pi / 2.,
+                                                     np.pi,
+                                                     np.pi,
+                                                     -100. * np.pi / 180.])
+                #real_jaco_joints_states *= np.array([1, -1, 1, -1, -1, -1])
+                for idx, controller in enumerate(self.controllers):
+                    msg.name.append(controller)
+                    msg.position.append(real_jaco_joints_states[idx])
+                #print(real_jaco_joints_states)
+                theta_temp = real_jaco_joints_states.reshape(6, 1)
+                cartesian_pose, rotation_matrix = direct_kinematics_jaco(theta_temp)
+                #print(cartesian_pose)
+                self.joint_states_pub.publish(msg)
+
+        else:
+            rospy.logerr('wrong inputs, expected "gazebo" or "real_world"')
+            print("current input is: ", self.control_type)
+
 
             #msg.position.append(joint.position)
             #msg.velocity.append(velocities[idx])
@@ -142,6 +179,7 @@ def convert_to_angular_velocities(velocities, theta_current, dt):
                                [theta_current[4]],
                                [theta_current[5]]])
     cartesian_pose, rotation_matrix = direct_kinematics_jaco(theta_current)
+
     next_cartesian_pose = cartesian_pose + np.multiply(velocities[0:3, 0].reshape(3, 1), dt)
     euler_angles = rotationMatrixToEulerAngles(rotation_matrix)
     next_euler_angles = np.array(euler_angles).reshape(3, 1) + np.multiply(velocities[3:6, 0].reshape(3, 1), dt)

@@ -1,7 +1,7 @@
 import numpy as np
 from direct_kinematics_jaco import direct_kinematics_jaco
 from inverse_kinematics_jaco import inverse_kinematics_jaco
-from joint_state_velocity_publisher import convert_to_angular_velocities
+from joint_states_publisher import convert_to_angular_velocities
 
 if __name__ == '__main__':
     theta = np.array([[0.344],

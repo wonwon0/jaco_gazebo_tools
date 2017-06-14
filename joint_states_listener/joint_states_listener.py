@@ -65,7 +65,7 @@ class LatestJointStates:
             self.lock.release()
             return (0, 0., 0., 0.)
         self.lock.release()
-        print(velocity)
+        #print(velocity)
         return (1, position, velocity, effort)
 
 
