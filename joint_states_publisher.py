@@ -37,12 +37,6 @@ class JointStatePublisher:
         if self.control_type == 'real_world':
             self.jaco_joints_client = JacoJointsClient()
 
-
-
-
-
-        # The namespace and joints parameter needs to be set by the servo controller
-        # (The namespace is usually null.)
         namespace = "jaco_on_table::"
         self.joints = ["jaco_arm_0_joint",
                         "jaco_arm_1_joint",
@@ -56,9 +50,11 @@ class JointStatePublisher:
                        namespace + "jaco_arm_2_joint",
                        namespace + "jaco_arm_3_joint",
                        namespace + "jaco_arm_4_joint",
-                       namespace + "jaco_arm_5_joint"]
+                       namespace + "jaco_arm_5_joint",
+                       namespace + "jaco_finger_joint_0",
+                       namespace + "jaco_finger_joint_2",
+                       namespace + "jaco_finger_joint_4"]
 
-        self.servos = list()
         self.controllers = list()
         self.last_working_pose = None
         # self.joint_states = dict({})
@@ -70,7 +66,7 @@ class JointStatePublisher:
         # Start publisher
         self.joint_states_pub = rospy.Publisher('/jaco/joint_control', JointState)
 
-        rospy.loginfo("Starting Joint State Publisher at " + str(rate) + "Hz")
+        rospy.loginfo("Joint State Publisher started at " + str(rate) + "Hz")
 
         while not rospy.is_shutdown():
             self.publish_joint_states()
@@ -101,12 +97,11 @@ class JointStatePublisher:
                 self.last_working_pose = latest_positions
             angular_velocities = convert_to_angular_velocities(velocities, latest_positions, 1.0 / self.rate)
             angular_velocities = angular_velocities.reshape(1, 6)[0]
-            #print(angular_velocities)
+            angular_velocities.append(np.array([0, 0, 0]))
             for idx, controller in enumerate(self.controllers):
                 msg.name.append(controller)
                 if abs(angular_velocities[idx]) <= 0.00000001:
                     msg.position.append(self.last_working_pose[idx])
-                    #msg.velocity.append(0)
                 else:
                     self.last_working_pose = latest_positions
                     msg.position.append(latest_positions[idx] + velocities[idx] * (1.0 / self.rate))
@@ -115,21 +110,28 @@ class JointStatePublisher:
 
         elif self.control_type == 'real_world':
             real_jaco_joints_states = self.jaco_joints_client.get_joints_states()
-            if real_jaco_joints_states == []:
+            real_jaco_fingers_states = self.jaco_joints_client.get_fingers_states()
+            if real_jaco_joints_states == [] or real_jaco_fingers_states == []:
                 pass
             else:
                 real_jaco_joints_states = np.array(real_jaco_joints_states)
-                real_jaco_joints_states *= np.array([1, -1, 1, -1, -1, -1])
-                real_jaco_joints_states -= np.array([-np.pi,
+                real_jaco_joints_states *= np.array([-1, 1, -1, -1, -1, -1])
+                real_jaco_joints_states -= np.array([0.,
                                                      -np.pi / 2.,
                                                      -np.pi / 2.,
-                                                     np.pi,
-                                                     np.pi,
-                                                     -100. * np.pi / 180.])
-                #real_jaco_joints_states *= np.array([1, -1, 1, -1, -1, -1])
+                                                     -np.pi,
+                                                     -np.pi,
+                                                     100 * np.pi / 180.])
+                print(real_jaco_fingers_states)
+                real_jaco_fingers_states = np.array(real_jaco_fingers_states)
+                data_to_send = np.hstack([real_jaco_joints_states, real_jaco_fingers_states])
                 for idx, controller in enumerate(self.controllers):
                     msg.name.append(controller)
-                    msg.position.append(real_jaco_joints_states[idx])
+                    if idx > 5:
+                        if data_to_send[idx] > 1.:
+                            data_to_send[idx] = 1.
+                            msg.effort.append(5)
+                    msg.position.append(data_to_send[idx])
                 #print(real_jaco_joints_states)
                 theta_temp = real_jaco_joints_states.reshape(6, 1)
                 cartesian_pose, rotation_matrix = direct_kinematics_jaco(theta_temp)
