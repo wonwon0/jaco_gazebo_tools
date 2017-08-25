@@ -4,6 +4,8 @@
 (defsystem "joint_states_listener-srv"
   :depends-on (:roslisp-msg-protocol :roslisp-utils )
   :components ((:file "_package")
+    (:file "ReturnJointStatesRealJaco" :depends-on ("_package_ReturnJointStatesRealJaco"))
+    (:file "_package_ReturnJointStatesRealJaco" :depends-on ("_package"))
     (:file "ReturnJointStates" :depends-on ("_package_ReturnJointStates"))
     (:file "_package_ReturnJointStates" :depends-on ("_package"))
   ))

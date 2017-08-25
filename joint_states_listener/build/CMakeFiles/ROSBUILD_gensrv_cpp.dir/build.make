@@ -53,8 +53,42 @@ CMAKE_BINARY_DIR = /home/phil/catkin_ws/src/scripts/joint_states_listener/build
 # Include the progress variables for this target.
 include CMakeFiles/ROSBUILD_gensrv_cpp.dir/progress.make
 
+CMakeFiles/ROSBUILD_gensrv_cpp: ../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h
 CMakeFiles/ROSBUILD_gensrv_cpp: ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h
 
+
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: ../srv/ReturnJointStatesRealJaco.srv
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/roscpp/rosbuild/scripts/gensrv_cpp.py
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/roscpp/rosbuild/scripts/genmsg_cpp.py
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/lib/roslib/gendeps
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: ../manifest.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/catkin/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/genmsg/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/genpy/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/cpp_common/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/rostime/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/roscpp_traits/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/roscpp_serialization/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/message_runtime/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/gencpp/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/geneus/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/gennodejs/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/genlisp/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/message_generation/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/rosbuild/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/rosconsole/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/std_msgs/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/rosgraph_msgs/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/xmlrpcpp/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/roscpp/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/rosgraph/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/rospack/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/roslib/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/rospy/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/geometry_msgs/package.xml
+../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h: /opt/ros/kinetic/share/sensor_msgs/package.xml
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/phil/catkin_ws/src/scripts/joint_states_listener/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating ../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h"
+	/opt/ros/kinetic/share/roscpp/rosbuild/scripts/gensrv_cpp.py /home/phil/catkin_ws/src/scripts/joint_states_listener/srv/ReturnJointStatesRealJaco.srv
 
 ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h: ../srv/ReturnJointStates.srv
 ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h: /opt/ros/kinetic/share/roscpp/rosbuild/scripts/gensrv_cpp.py
@@ -86,10 +120,11 @@ CMakeFiles/ROSBUILD_gensrv_cpp: ../srv_gen/cpp/include/joint_states_listener/Ret
 ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h: /opt/ros/kinetic/share/rospy/package.xml
 ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h: /opt/ros/kinetic/share/geometry_msgs/package.xml
 ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h: /opt/ros/kinetic/share/sensor_msgs/package.xml
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/phil/catkin_ws/src/scripts/joint_states_listener/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/phil/catkin_ws/src/scripts/joint_states_listener/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h"
 	/opt/ros/kinetic/share/roscpp/rosbuild/scripts/gensrv_cpp.py /home/phil/catkin_ws/src/scripts/joint_states_listener/srv/ReturnJointStates.srv
 
 ROSBUILD_gensrv_cpp: CMakeFiles/ROSBUILD_gensrv_cpp
+ROSBUILD_gensrv_cpp: ../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h
 ROSBUILD_gensrv_cpp: ../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h
 ROSBUILD_gensrv_cpp: CMakeFiles/ROSBUILD_gensrv_cpp.dir/build.make
 

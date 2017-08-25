@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "../srv_gen"
   "../src/joint_states_listener/srv"
   "CMakeFiles/ROSBUILD_gensrv_cpp"
+  "../srv_gen/cpp/include/joint_states_listener/ReturnJointStatesRealJaco.h"
   "../srv_gen/cpp/include/joint_states_listener/ReturnJointStates.h"
 )
 

@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "../src/joint_states_listener/srv"
   "CMakeFiles/ROSBUILD_gensrv_py"
   "../src/joint_states_listener/srv/__init__.py"
+  "../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py"
   "../src/joint_states_listener/srv/_ReturnJointStates.py"
 )
 

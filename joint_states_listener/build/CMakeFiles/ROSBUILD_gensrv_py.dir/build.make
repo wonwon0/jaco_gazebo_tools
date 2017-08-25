@@ -56,9 +56,42 @@ include CMakeFiles/ROSBUILD_gensrv_py.dir/progress.make
 CMakeFiles/ROSBUILD_gensrv_py: ../src/joint_states_listener/srv/__init__.py
 
 
+../src/joint_states_listener/srv/__init__.py: ../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py
 ../src/joint_states_listener/srv/__init__.py: ../src/joint_states_listener/srv/_ReturnJointStates.py
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/phil/catkin_ws/src/scripts/joint_states_listener/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating ../src/joint_states_listener/srv/__init__.py"
-	/opt/ros/kinetic/share/rospy/rosbuild/scripts/gensrv_py.py --initpy /home/phil/catkin_ws/src/scripts/joint_states_listener/srv/ReturnJointStates.srv
+	/opt/ros/kinetic/share/rospy/rosbuild/scripts/gensrv_py.py --initpy /home/phil/catkin_ws/src/scripts/joint_states_listener/srv/ReturnJointStatesRealJaco.srv /home/phil/catkin_ws/src/scripts/joint_states_listener/srv/ReturnJointStates.srv
+
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: ../srv/ReturnJointStatesRealJaco.srv
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rospy/rosbuild/scripts/gensrv_py.py
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/lib/roslib/gendeps
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: ../manifest.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/catkin/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/genmsg/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/genpy/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/cpp_common/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rostime/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/roscpp_traits/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/roscpp_serialization/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/message_runtime/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/gencpp/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/geneus/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/gennodejs/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/genlisp/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/message_generation/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rosbuild/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rosconsole/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/std_msgs/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rosgraph_msgs/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/xmlrpcpp/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/roscpp/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rosgraph/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rospack/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/roslib/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/rospy/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/geometry_msgs/package.xml
+../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py: /opt/ros/kinetic/share/sensor_msgs/package.xml
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/phil/catkin_ws/src/scripts/joint_states_listener/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating ../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py"
+	/opt/ros/kinetic/share/rospy/rosbuild/scripts/gensrv_py.py --noinitpy /home/phil/catkin_ws/src/scripts/joint_states_listener/srv/ReturnJointStatesRealJaco.srv
 
 ../src/joint_states_listener/srv/_ReturnJointStates.py: ../srv/ReturnJointStates.srv
 ../src/joint_states_listener/srv/_ReturnJointStates.py: /opt/ros/kinetic/share/rospy/rosbuild/scripts/gensrv_py.py
@@ -89,11 +122,12 @@ CMakeFiles/ROSBUILD_gensrv_py: ../src/joint_states_listener/srv/__init__.py
 ../src/joint_states_listener/srv/_ReturnJointStates.py: /opt/ros/kinetic/share/rospy/package.xml
 ../src/joint_states_listener/srv/_ReturnJointStates.py: /opt/ros/kinetic/share/geometry_msgs/package.xml
 ../src/joint_states_listener/srv/_ReturnJointStates.py: /opt/ros/kinetic/share/sensor_msgs/package.xml
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/phil/catkin_ws/src/scripts/joint_states_listener/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating ../src/joint_states_listener/srv/_ReturnJointStates.py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/phil/catkin_ws/src/scripts/joint_states_listener/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating ../src/joint_states_listener/srv/_ReturnJointStates.py"
 	/opt/ros/kinetic/share/rospy/rosbuild/scripts/gensrv_py.py --noinitpy /home/phil/catkin_ws/src/scripts/joint_states_listener/srv/ReturnJointStates.srv
 
 ROSBUILD_gensrv_py: CMakeFiles/ROSBUILD_gensrv_py
 ROSBUILD_gensrv_py: ../src/joint_states_listener/srv/__init__.py
+ROSBUILD_gensrv_py: ../src/joint_states_listener/srv/_ReturnJointStatesRealJaco.py
 ROSBUILD_gensrv_py: ../src/joint_states_listener/srv/_ReturnJointStates.py
 ROSBUILD_gensrv_py: CMakeFiles/ROSBUILD_gensrv_py.dir/build.make
 

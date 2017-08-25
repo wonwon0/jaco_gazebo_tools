@@ -19,7 +19,7 @@
 % Parametres Intermediaires
     sa = sin(aa);
     s2a = sin(2*aa);
-    d4b = D3 + (sa/s2a)*D4;
+    d4b = D3 + (sa/s2a)*D4;v
     d5b = sa/s2a*D4 + (sa/s2a)*D5;
     d6b = sa/s2a*D5 + D6;
 
