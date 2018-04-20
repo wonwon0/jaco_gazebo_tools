@@ -101,7 +101,6 @@ class JointStatePublisher:
             angular_velocities = convert_to_angular_velocities(velocities, latest_positions, 1.0 / self.rate)
             angular_velocities = angular_velocities.reshape(1, 6)[0]
             angular_velocities = np.append(angular_velocities, np.array([0, 0, 0]))
-            print(latest_positions)
             for idx, controller in enumerate(self.controllers):
                 msg.name.append(controller)
                 if abs(angular_velocities[idx]) <= 0.00000001:
