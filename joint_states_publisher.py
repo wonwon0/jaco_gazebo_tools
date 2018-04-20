@@ -39,11 +39,14 @@ class JointStatePublisher:
 
         namespace = "jaco_on_table::"
         self.joints = ["jaco_arm_0_joint",
-                        "jaco_arm_1_joint",
-                        "jaco_arm_2_joint",
-                        "jaco_arm_3_joint",
-                        "jaco_arm_4_joint",
-                        "jaco_arm_5_joint"]
+                       "jaco_arm_1_joint",
+                       "jaco_arm_2_joint",
+                       "jaco_arm_3_joint",
+                       "jaco_arm_4_joint",
+                       "jaco_arm_5_joint",
+                       "jaco_finger_joint_0",
+                       "jaco_finger_joint_2",
+                       "jaco_finger_joint_4"]
         self.latest_states = JointStatesListener(self.joints)
         self.joints = [namespace + "jaco_arm_0_joint",
                        namespace + "jaco_arm_1_joint",
@@ -97,13 +100,15 @@ class JointStatePublisher:
                 self.last_working_pose = latest_positions
             angular_velocities = convert_to_angular_velocities(velocities, latest_positions, 1.0 / self.rate)
             angular_velocities = angular_velocities.reshape(1, 6)[0]
-            angular_velocities.append(np.array([0, 0, 0]))
+            angular_velocities = np.append(angular_velocities, np.array([0, 0, 0]))
+            print(latest_positions)
             for idx, controller in enumerate(self.controllers):
                 msg.name.append(controller)
                 if abs(angular_velocities[idx]) <= 0.00000001:
                     msg.position.append(self.last_working_pose[idx])
                 else:
                     self.last_working_pose = latest_positions
+
                     msg.position.append(latest_positions[idx] + velocities[idx] * (1.0 / self.rate))
                     msg.velocity.append(angular_velocities[idx])
             self.joint_states_pub.publish(msg)
